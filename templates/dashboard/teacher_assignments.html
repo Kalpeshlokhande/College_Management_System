@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Assignments</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Class</th>
+      <th>File</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in assignments %}
+    <tr>
+      <td>{{ a.title }}</td>
+      <td>{{ a.classroom.name }}</td>
+      <td><a href="{{ a.file.url }}">Download</a></td>
+      <td>{{ a.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4>Add Assignment</h4>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="mb-2">
+    <label>Class</label>
+    <select name="classroom" class="form-select" required>
+      {% for c in classes %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <input type="text" name="title" placeholder="Title" class="form-control" required>
+  </div>
+  <div class="mb-2">
+    <input type="file" name="file" class="form-control" required>
+  </div>
+  <button class="btn btn-success" type="submit">Add Assignment</button>
+</form>
+{% endblock %}

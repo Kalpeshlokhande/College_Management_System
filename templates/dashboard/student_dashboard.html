@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+{% block content %}
+<h1>Student Dashboard</h1>
+<h4>Your Classes</h4>
+<ul>
+  {% for c in classrooms %}
+    <li>{{ c.name }}</li>
+  {% empty %}
+    <li>No classes assigned.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'student_assignments' %}" class="btn btn-primary mt-2">Assignments</a>
+<a href="{% url 'view_schedule' %}" class="btn btn-secondary mt-2">View Schedule</a>
+<h4>Announcements</h4>
+<ul class="list-group">
+  {% for a in announcements %}
+    <li class="list-group-item">
+      <strong>{{ a.classroom.name }}</strong> - {{ a.created_at }}<br>
+      {{ a.content }}
+    </li>
+  {% empty %}
+    <li class="list-group-item">No announcements</li>
+  {% endfor %}
+</ul>
+{% endblock %}

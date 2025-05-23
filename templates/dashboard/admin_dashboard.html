@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+<div class="row">
+  <div class="col-md-3">
+    <h4>Teachers</h4>
+    <ul class="list-group">
+      {% for t in teachers %}
+        <li class="list-group-item">{{ t.user.username }}</li>
+      {% empty %}
+        <li class="list-group-item">No teachers</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'manage_teachers' %}" class="btn btn-primary btn-sm mt-2">Manage Teachers</a>
+  </div>
+  <div class="col-md-3">
+    <h4>Students</h4>
+    <ul class="list-group">
+      {% for s in students %}
+        <li class="list-group-item">{{ s.user.username }}</li>
+      {% empty %}
+        <li class="list-group-item">No students</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'manage_students' %}" class="btn btn-primary btn-sm mt-2">Manage Students</a>
+  </div>
+  <div class="col-md-3">
+    <h4>Classes</h4>
+    <ul class="list-group">
+      {% for c in classrooms %}
+        <li class="list-group-item">{{ c.name }}</li>
+      {% empty %}
+        <li class="list-group-item">No classes</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'manage_classes' %}" class="btn btn-primary btn-sm mt-2">Manage Classes</a>
+  </div>
+  <div class="col-md-3">
+    <h4>Subjects</h4>
+    <ul class="list-group">
+      {% for subj in subjects %}
+        <li class="list-group-item">{{ subj.name }}</li>
+      {% empty %}
+        <li class="list-group-item">No subjects</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'manage_subjects' %}" class="btn btn-primary btn-sm mt-2">Manage Subjects</a>
+  </div>
+</div>
+<a href="{% url 'manage_schedule' %}" class="btn btn-success mt-4">Manage Schedule</a>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Manage Schedule{% endblock %}
+{% block content %}
+<h2>Manage Schedule</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Subject</th>
+      <th>Teacher</th>
+      <th>Day</th>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in schedules %}
+    <tr>
+      <td>{{ s.classroom.name }}</td>
+      <td>{{ s.subject.name }}</td>
+      <td>{{ s.teacher.username }}</td>
+      <td>{{ s.day }}</td>
+      <td>{{ s.start_time }}</td>
+      <td>{{ s.end_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4>Add Schedule</h4>
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-2">
+    <label>Class</label>
+    <select name="classroom" class="form-select" required>
+      {% for c in classes %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Subject</label>
+    <select name="subject" class="form-select" required>
+      {% for subj in subjects %}
+      <option value="{{ subj.id }}">{{ subj.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Teacher</label>
+    <select name="teacher" class="form-select" required>
+      {% for t in teachers %}
+      <option value="{{ t.id }}">{{ t.username }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Day</label>
+    <select name="day" class="form-select" required>
+      {% for d, d_label in days %}
+      <option value="{{ d }}">{{ d_label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Start Time</label>
+    <input type="time" name="start_time" class="form-control" required>
+  </div>
+  <div class="mb-2">
+    <label>End Time</label>
+    <input type="time" name="end_time" class="form-control" required>
+  </div>
+  <button class="btn btn-success" type="submit">Add Schedule</button>
+</form>
+{% endblock %}

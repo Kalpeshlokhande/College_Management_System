@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Manage Classes{% endblock %}
+{% block content %}
+<h2>Manage Classes</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Teachers</th>
+      <th>Students</th>
+      <th>Subjects</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in classes %}
+    <tr>
+      <td>{{ c.name }}</td>
+      <td>{% for t in c.teachers.all %}{{ t.username }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      <td>{% for s in c.students.all %}{{ s.username }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      <td>{% for subj in c.subjects.all %}{{ subj.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      <td>
+        <form method="post" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="class_id" value="{{ c.id }}">
+          <input type="hidden" name="action" value="delete">
+          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4>Add Class</h4>
+<form method="post">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="add">
+  <div class="mb-2">
+    <input type="text" name="name" placeholder="Class Name" class="form-control" required>
+  </div>
+  <div class="mb-2">
+    <label>Teachers</label>
+    <select name="teachers" class="form-select" multiple>
+      {% for t in teachers %}
+      <option value="{{ t.id }}">{{ t.username }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Students</label>
+    <select name="students" class="form-select" multiple>
+      {% for s in students %}
+      <option value="{{ s.id }}">{{ s.username }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <label>Subjects</label>
+    <select name="subjects" class="form-select" multiple>
+      {% for subj in subjects %}
+      <option value="{{ subj.id }}">{{ subj.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="btn btn-success" type="submit">Add Class</button>
+</form>
+{% endblock %}

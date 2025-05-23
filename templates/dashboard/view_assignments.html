@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Assignments</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Class</th>
+      <th>File</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for a in assignments %}
+    <tr>
+      <td>{{ a.title }}</td>
+      <td>{{ a.classroom.name }}</td>
+      <td><a href="{{ a.file.url }}">Download</a></td>
+      <td>{{ a.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

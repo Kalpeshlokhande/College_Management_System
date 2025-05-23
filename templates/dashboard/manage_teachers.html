@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Manage Teachers{% endblock %}
+{% block content %}
+<h2>Manage Teachers</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in teachers %}
+    <tr>
+      <td>{{ t.user.username }}</td>
+      <td>{{ t.user.email }}</td>
+      <td>
+        <form method="post" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="user_id" value="{{ t.user.id }}">
+          <input type="hidden" name="action" value="delete">
+          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No teachers found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4>Add Teacher</h4>
+<form method="post">
+  {% csrf_token %}
+  <input type="hidden" name="action" value="add">
+  <div class="mb-2">
+    <input type="text" name="username" placeholder="Username" class="form-control" required>
+  </div>
+  <div class="mb-2">
+    <input type="email" name="email" placeholder="Email" class="form-control">
+  </div>
+  <div class="mb-2">
+    <input type="password" name="password" placeholder="Password" class="form-control" required>
+  </div>
+  <button class="btn btn-success" type="submit">Add Teacher</button>
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Teacher Dashboard{% endblock %}
+{% block content %}
+<h1>Teacher Dashboard</h1>
+<h4>Your Classes</h4>
+<ul>
+  {% for c in classes %}
+    <li>{{ c.name }}</li>
+  {% empty %}
+    <li>No classes assigned.</li>
+  {% endfor %}
+</ul>
+<a href="{% url 'teacher_assignments' %}" class="btn btn-primary mt-2">Assignments</a>
+<a href="{% url 'teacher_announcements' %}" class="btn btn-primary mt-2">Announcements</a>
+<a href="{% url 'view_schedule' %}" class="btn btn-secondary mt-2">View Schedule</a>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Schedule</h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Class</th>
+      <th>Subject</th>
+      <th>Teacher</th>
+      <th>Day</th>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in schedules %}
+    <tr>
+      <td>{{ s.classroom.name }}</td>
+      <td>{{ s.subject.name }}</td>
+      <td>{{ s.teacher.username }}</td>
+      <td>{{ s.day }}</td>
+      <td>{{ s.start_time }}</td>
+      <td>{{ s.end_time }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

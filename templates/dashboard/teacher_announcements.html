@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Announcements</h2>
+<ul class="list-group">
+  {% for a in announcements %}
+  <li class="list-group-item">
+    <strong>{{ a.classroom.name }}</strong> - {{ a.created_at }}<br>
+    {{ a.content }}
+  </li>
+  {% endfor %}
+</ul>
+<h4>Add Announcement</h4>
+<form method="post">
+  {% csrf_token %}
+  <div class="mb-2">
+    <label>Class</label>
+    <select name="classroom" class="form-select" required>
+      {% for c in classes %}
+      <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-2">
+    <textarea name="content" class="form-control" required></textarea>
+  </div>
+  <button class="btn btn-success" type="submit">Add Announcement</button>
+</form>
+{% endblock %}
